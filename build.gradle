@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id "org.javamodularity.moduleplugin" version "1.6.0"
+}
+
+group 'xyz.ronella.logging'
+version '1.0.0'
+
+sourceCompatibility = 1.12
+
+repositories {
+    maven {
+        url 'https://repo.ronella.xyz/artifactory/java-central'
+        credentials {
+            username "${artifactoryUsername}"
+            password "${artifactoryPassword}"
+        }
+    }
+}
+
+dependencies {
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.12.1'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.12.1'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.8.0-beta4'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j18-impl', version: '2.12.1'
+
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.2'
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.2'
+    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.5.2'
+
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.1.0'
+}
+
+test {
+    useJUnitPlatform()
+}
