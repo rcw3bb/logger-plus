@@ -1,4 +1,4 @@
-# LoggerPlus
+# Logger Plus
 
 Additional functionality to logging. 
 
@@ -9,17 +9,91 @@ Additional functionality to logging.
 
 ## Usage
 
-1. **Clone** this repository on your local.
+1. Add the following **maven** dependency to your project:
 
-2. Remove the **.git folder** from where you've cloned the repository.
+   | Property    | Value               |
+   | ----------- | ------------------- |
+   | Group ID    | xyz.ronella.logging |
+   | Artifact ID | logger-plus         |
+   | Version     | 1.0.0               |
 
-3. Run the following command:
+   > Using gradle, this can be added as a dependency entry like the following:
+   >
+   > ```groovy
+   > compile group: 'xyz.ronella.logging', name: 'logger-plus', version: '1.0.0'
+   > ```
 
+2. Include the following to your **module-info.java**:
+
+   ```java
+   requires xyz.ronella.logging.logger.plus;
    ```
-   gradlew test
+
+3. Within your class, you can create an instance **LoggerPlus** like the following:
+
+   ```java
+   private final static LoggerPlus LOGGER_PLUS = new LoggerPlus(LoggerFactory.getLogger(Main.class));
    ```
 
-   > If it completes successfully your setup is good.
+   > The **LoggerFactory** class here must be from **SLF4J**.
+
+## Available Log Level Methods
+
+There are **two sets** of log level methods available. One that accepts message as **String parameter** and the one that accepts an instance of **Supplier<String>** to generate the message.
+
+| String Parameter | Instance of Supplier<String> as Parameter |
+| ---------------- | ----------------------------------------- |
+| error(String)    | error(Supplier<String>)                   |
+| warn(String)     | warn(Supplier<String>)                    |
+| info(String)     | info(Supplier<String>)                    |
+| debug(String)    | debug(Supplier<String>)                   |
+| trace(String)    | trace(Supplier<String>)                   |
+
+> You don't need to call the corresponding **enabled methods** of the preceding log level methods *(i.e. isErrorEnabled(), isWarnEnabled(), isInfoEnabled(), isDebugEnabled() and isTraceEnabled())*. Call to these methods were already done for you. The more efficient sets of method to use are the ones that accepts an instance of Supplier<String> that generates the message.
+
+## Group the Log by Method
+
+Having a log entries that you can identify what method wrote them is very helpful. For example, if you have an **accept** method that you wanted it's log entries trackable. You can do it like the following:
+
+```java
+public void accept(Boolean mustProvision) {
+    try(var mLOG = LOGGER_PLUS.logByMethodCall("accept")) {
+        /*
+         *
+         */
+        mLOG.info("Processing");
+        /*
+         *
+         */
+    }
+}
+```
+
+Expect an output similar to the following:
+
+```
+22:26:53.237 DEBUG accept [BEGIN]
+22:26:53.239 INFO  accept Processing
+22:26:54.824 DEBUG accept [END]
+```
+
+> Notice that all the log entries made by the accept method has it's **name included** and with **[BEGIN]** and **[END]** marker. The markers will be at **DEBUG** level. If you wanted to remove the markers, you pass **false** as a second argument to the **logByMethodCall** method invocation, like the following:
+>
+> ```java
+> LOGGER_PLUS.logByMethodCall("accept", false)
+> ```
+
+## The getStackTraceAsString(Exception) Method
+
+Normally, we wanted to catch the actual error stack trace in the log file. This can be simplified by the getStackTraceAsString method that accepts and instance of Exception. You can do it like the following:
+
+```java
+LOGGER_PLUS.error(LOGGER_PLUS.getStackTraceAsString(exception));
+```
+
+## The getLogger() Method
+
+If you need some specific functionality of the Logger, you can get an instance of it using the getLogger() method. The instance that you will receive is the one you've passed from the constructor.
 
 ## License
 
