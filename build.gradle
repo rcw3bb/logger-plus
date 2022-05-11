@@ -1,77 +1,146 @@
 plugins {
-    id 'java'
-    id "org.javamodularity.moduleplugin" version "1.6.0"
-    id "com.bmuschko.nexus" version "2.3.1"
-    id "io.codearte.nexus-staging" version "0.21.1"
+    id 'java-library'
+    id 'maven-publish'
+    id 'org.javamodularity.moduleplugin' version '1.8.10'
+    id "io.github.gradle-nexus.publish-plugin" version "1.1.0"
+    id 'signing'
+    id 'jacoco'
 }
 
 group 'xyz.ronella.logging'
-version '1.0.0'
+version '1.1.0-SNAPSHOT'
 
-sourceCompatibility = 1.12
+sourceCompatibility = 1.11
 
 repositories {
-    maven {
-        url 'https://repo.ronella.xyz/artifactory/java-central'
-        credentials {
-            username "${artifactoryUsername}"
-            password "${artifactoryPassword}"
+    if (Boolean.valueOf(USE_PRIVATE_REPO)) {
+        println "Using Private Repository"
+
+        maven {
+            url 'https://repo.ronella.xyz/artifactory/java-central'
+            credentials {
+                username "${artifactoryUsername}"
+                password "${artifactoryPassword}"
+            }
+            mavenContent {
+                releasesOnly()
+            }
+        }
+        maven {
+            url 'https://repo.ronella.xyz/archiva/repository/snapshots/'
+            credentials {
+                username "${archivaUsername}"
+                password "${archivaPassword}"
+            }
+            mavenContent {
+                snapshotsOnly()
+            }
+        }
+    }
+    else {
+        println "Using mavenCentral Repository"
+        mavenCentral()
+    }
+}
+
+task javadocJar(type: Jar) {
+    archiveClassifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    archiveClassifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task testsJar(type: Jar, dependsOn: [testClasses]) {
+    archiveClassifier = 'tests'
+    from sourceSets.test.output
+}
+
+jar.finalizedBy(javadocJar, sourcesJar, testsJar)
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        repositories.maven {
+            def publishingPath = version.toString().contains("SNAPSHOT") ? 'snapshots' : 'internal'
+            url "https://repo.ronella.xyz/archiva/repository/${publishingPath}/"
+            credentials {
+                username "${archivaUsername}"
+                password "${archivaPassword}"
+            }
+        }
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact testsJar
+            pom {
+                name = 'Logger Plus'
+                description = 'Additional functionality to logging.'
+                url = 'https://github.com/rcw3bb/logger-plus'
+                properties = [
+                        "inceptionYear": '2019'
+                ]
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://github.com/rcw3bb/logger-plus/blob/master/LICENSE.md'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'rcw3bb'
+                        name = 'Ronaldo Webb'
+                        email = 'ronaldo.c.webb@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'https://github.com/rcw3bb/logger-plus.git'
+                    developerConnection = 'https://github.com/rcw3bb/logger-plus.git'
+                    url = 'https://github.com/rcw3bb/logger-plus'
+                }
+            }
         }
     }
 }
 
-modifyPom {
-    project {
-        name 'Logger Plus'
-        description 'Additional functionality to logging.'
-        url 'https://github.com/rcw3bb/logger-plus'
-        inceptionYear '2019'
+test {
+    finalizedBy jacocoTestReport
+}
 
-        scm {
-            url 'https://github.com/rcw3bb/logger-plus'
-            connection 'https://github.com/rcw3bb/logger-plus.git'
-            developerConnection 'https://github.com/rcw3bb/logger-plus.git'
-        }
+jacocoTestReport {
+    dependsOn test
+}
 
-        licenses {
-            license {
-                name 'MIT License'
-                url 'https://github.com/rcw3bb/logger-plus/blob/master/LICENSE.md'
-                distribution 'repo'
-            }
-        }
+signing {
+    sign publishing.publications.mavenJava
+}
 
-        developers {
-            developer {
-                id 'rcw3bb'
-                name 'Ronaldo Webb'
-                email 'ronaldo.c.webb@gmail.com'
-            }
-        }
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
     }
 }
 
-extraArchive {
-    sources = true
-    tests = true
-    javadoc = true
-}
-
-nexus {
-    sign = true
-    repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
-    snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
-}
-
-nexusStaging {
-    stagingProfileId = "1394775ce780ca"
+nexusPublishing {
+    repositories {
+        sonatype {
+            nexusUrl = uri('https://oss.sonatype.org/service/local/')
+            snapshotRepositoryUrl = uri('https://oss.sonatype.org/content/repositories/snapshots/')
+            stagingProfileId = "1394775ce780ca"
+        }
+    }
 }
 
 dependencies {
-    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.12.1'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.12.1'
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.8.0-beta4'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j18-impl', version: '2.12.1'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.12.1'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.12.1'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.8.0-beta4'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j18-impl', version: '2.12.1'
 
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.2'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.2'
