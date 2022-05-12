@@ -137,16 +137,15 @@ nexusPublishing {
 }
 
 dependencies {
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.12.1'
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.12.1'
-    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.8.0-beta4'
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j18-impl', version: '2.12.1'
+    api 'org.slf4j:slf4j-api:1.8.0-beta4'
+    implementation 'org.apache.logging.log4j:log4j-slf4j18-impl:2.17.2'
+    implementation 'org.apache.logging.log4j:log4j-api:2.17.2'
+    implementation 'org.apache.logging.log4j:log4j-core:2.17.2'
 
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.2'
-    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.2'
-    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.5.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 
-    testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.1.0'
+    testImplementation 'org.mockito:mockito-core:4.5.1'
 }
 
 test {
