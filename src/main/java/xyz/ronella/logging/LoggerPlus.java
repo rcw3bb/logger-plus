@@ -34,7 +34,7 @@ public class LoggerPlus {
      * @author Ron Webb
      * @since 2019-11-27
      */
-    public final static class MethodLogger implements AutoCloseable {
+    public static class MethodLogger implements AutoCloseable {
 
         private LoggerPlus logPlus;
         private String methodName;
@@ -54,6 +54,7 @@ public class LoggerPlus {
         public MethodLogger(String methodName, LoggerPlus logPlus, boolean withHeader) {
             this.methodName = methodName;
             this.logPlus = logPlus;
+            this.withHeader = withHeader;
             if (withHeader) {
                 this.logPlus.debug(() -> messageBlock.apply(this.methodName, "[BEGIN]"));
             }
@@ -275,14 +276,15 @@ public class LoggerPlus {
      * @return The string equivalent of stacktrace.
      */
     public String getStackTraceAsString(Exception exception) {
-        try(var sWriter = new StringWriter();
-            var pWriter = new PrintWriter(sWriter)) {
+        if (null!=exception) {
+            try (var sWriter = new StringWriter();
+                 var pWriter = new PrintWriter(sWriter)) {
 
-            exception.printStackTrace(pWriter);
-            return sWriter.toString();
-        }
-        catch(IOException ioe) {
-            ioe.printStackTrace();
+                exception.printStackTrace(pWriter);
+                return sWriter.toString();
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
         }
 
         return null;
