@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.1 : 2020-05-13
+
+### Changed
+
+* Refine the dependencies.
+
 ## 1.1.0 : 2020-05-13
 
 ### Added

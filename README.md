@@ -15,12 +15,12 @@ Additional functionality to logging.
    | ----------- | ------------------- |
    | Group ID    | xyz.ronella.logging |
    | Artifact ID | logger-plus         |
-   | Version     | 1.1.0               |
+   | Version     | 1.1.1               |
 
    > Using gradle, this can be added as a dependency entry like the following:
    >
    > ```groovy
-   > compile group: 'xyz.ronella.logging', name: 'logger-plus', version: '1.1.0'
+   > implementation 'xyz.ronella.logging:logger-plus:1.1.1'
    > ```
 
 2. Include the following to your **module-info.java**:
