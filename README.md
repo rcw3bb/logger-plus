@@ -4,7 +4,7 @@ Additional functionality to logging.
 
 ## Requires
 
-* Java 9
+* Java 11
 * SLF4J 1.8+
 
 ## Usage
@@ -15,12 +15,12 @@ Additional functionality to logging.
    | ----------- | ------------------- |
    | Group ID    | xyz.ronella.logging |
    | Artifact ID | logger-plus         |
-   | Version     | 1.0.0               |
+   | Version     | 1.1.0               |
 
    > Using gradle, this can be added as a dependency entry like the following:
    >
    > ```groovy
-   > compile group: 'xyz.ronella.logging', name: 'logger-plus', version: '1.0.0'
+   > compile group: 'xyz.ronella.logging', name: 'logger-plus', version: '1.1.0'
    > ```
 
 2. Include the following to your **module-info.java**:
@@ -51,17 +51,17 @@ There are **two sets** of log level methods available. One that accepts message 
 
 > You don't need to call the corresponding **enabled methods** of the preceding log level methods *(i.e. isErrorEnabled(), isWarnEnabled(), isInfoEnabled(), isDebugEnabled() and isTraceEnabled())*. Call to these methods were already done for you. The more efficient sets of method to use are the ones that accepts an instance of Supplier<String> that generates the message.
 
-## Group the Log by Method
+## Group the Log by Name
 
-Having a log entries that you can identify what method wrote them is very helpful. For example, if you have an **accept** method that you wanted it's log entries trackable. You can do it like the following:
+Having a log entries that you can identify what group *(or part of the codes)* wrote them is very helpful. For example, if you have an **accept** method that you wanted it's log entries trackable. You can do it like the following:
 
 ```java
 public void accept(Boolean mustProvision) {
-    try(var mLOG = LOGGER_PLUS.logByMethodCall("accept")) {
+    try(var gLOG = LOGGER_PLUS.groupLog("accept")) {
         /*
          *
          */
-        mLOG.info("Processing");
+        gLOG.info("Processing");
         /*
          *
          */
@@ -77,15 +77,15 @@ Expect an output similar to the following:
 22:26:54.824 DEBUG accept [END]
 ```
 
-> Notice that all the log entries made by the accept method has it's **name included** and with **[BEGIN]** and **[END]** marker. The markers will be at **DEBUG** level. If you wanted to remove the markers, you pass **false** as a second argument to the **logByMethodCall** method invocation, like the following:
+> Notice that all the log entries made by the accept method has the **group name included** and with **[BEGIN]** and **[END]** marker. The markers will be at **DEBUG** level. If you wanted to remove the markers, you pass **false** as a second argument to the **groupLog** method invocation, like the following:
 >
 > ```java
-> LOGGER_PLUS.logByMethodCall("accept", false)
+> LOGGER_PLUS.groupLog("accept", false)
 > ```
 
 ## The getStackTraceAsString(Exception) Method
 
-Normally, we wanted to catch the actual error stack trace in the log file. This can be simplified by the getStackTraceAsString method that accepts and instance of Exception. You can do it like the following:
+Normally, we wanted to catch the actual error stack trace as string into the log file. This can be simplified by the getStackTraceAsString method that accepts an instance of Exception. See the sample usage as follows:
 
 ```java
 LOGGER_PLUS.error(LOGGER_PLUS.getStackTraceAsString(exception));
