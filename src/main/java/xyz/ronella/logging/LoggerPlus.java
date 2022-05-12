@@ -37,6 +37,14 @@ public class LoggerPlus {
      */
     @Deprecated
     public static class MethodLogger extends GroupLogger {
+
+        /**
+         * Create an instance of MethodLogger.
+         *
+         * @param methodName The method name to associate the log messages.
+         * @param logPlus An instance of LoggerPlus.
+         * @param withHeader Place a log header message in each method class.
+         */
         public MethodLogger(String methodName, LoggerPlus logPlus, boolean withHeader) {
             super(methodName, logPlus, withHeader);
         }
@@ -52,7 +60,7 @@ public class LoggerPlus {
 
         final private LoggerPlus logPlus;
 
-        final private String methodName;
+        final private String groupName;
 
         final private boolean withHeader;
 
@@ -62,16 +70,16 @@ public class LoggerPlus {
         /**
          * Create an instance of GroupLogger.
          *
-         * @param methodName The method name to associate the log messages.
+         * @param groupName The group name to associate the log messages.
          * @param logPlus An instance of LoggerPlus.
          * @param withHeader Place a log header message in each method class.
          */
-        public GroupLogger(String methodName, LoggerPlus logPlus, boolean withHeader) {
-            this.methodName = methodName;
+        public GroupLogger(String groupName, LoggerPlus logPlus, boolean withHeader) {
+            this.groupName = groupName;
             this.logPlus = logPlus;
             this.withHeader = withHeader;
             if (withHeader) {
-                this.logPlus.debug(() -> messageBlock.apply(this.methodName, "[BEGIN]"));
+                this.logPlus.debug(() -> messageBlock.apply(this.groupName, "[BEGIN]"));
             }
         }
 
@@ -81,7 +89,7 @@ public class LoggerPlus {
         @Override
         public void close() {
             if (withHeader) {
-                logPlus.debug(() -> messageBlock.apply(methodName, "[END]"));
+                logPlus.debug(() -> messageBlock.apply(groupName, "[END]"));
             }
         }
 
@@ -98,7 +106,7 @@ public class LoggerPlus {
          * @param message The supplier of message.
          */
         public void debug(Supplier<String> message) {
-            logPlus.debug(() -> messageBlock.apply(methodName, message.get()));
+            logPlus.debug(() -> messageBlock.apply(groupName, message.get()));
         }
 
         /**
@@ -114,7 +122,7 @@ public class LoggerPlus {
          * @param message The supplier of message.
          */
         public void info(Supplier<String> message) {
-            logPlus.info(() -> messageBlock.apply(methodName, message.get()));
+            logPlus.info(() -> messageBlock.apply(groupName, message.get()));
         }
 
         /**
@@ -130,7 +138,7 @@ public class LoggerPlus {
          * @param message The supplier of message.
          */
         public void error(Supplier<String> message) {
-            logPlus.error(() -> messageBlock.apply(methodName, message.get()));
+            logPlus.error(() -> messageBlock.apply(groupName, message.get()));
         }
 
         /**
@@ -146,7 +154,7 @@ public class LoggerPlus {
          * @param message The supplier of message.
          */
         public void warn(Supplier<String> message) {
-            logPlus.warn(() -> messageBlock.apply(methodName, message.get()));
+            logPlus.warn(() -> messageBlock.apply(groupName, message.get()));
         }
 
         /**
@@ -162,7 +170,7 @@ public class LoggerPlus {
          * @param message The supplier of message.
          */
         public void trace(Supplier<String> message) {
-            logPlus.trace(() -> messageBlock.apply(methodName, message.get()));
+            logPlus.trace(() -> messageBlock.apply(groupName, message.get()));
         }
     }
 
