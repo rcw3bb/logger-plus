@@ -5,9 +5,6 @@ import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -18,7 +15,7 @@ public class LoggerPlusTest {
 
     @Test
     public void methodDebug() {
-        try (var mLOG = LOGGER_PLUS.logByMethodCall("methodDebug")) {
+        try (var mLOG = LOGGER_PLUS.groupLog("methodDebug")) {
             var str = new StringBuilder();
             mLOG.debug(()-> str.append("I'm in").toString());
             assertEquals("I'm in", str.toString());
@@ -34,7 +31,7 @@ public class LoggerPlusTest {
 
     @Test
     public void methodInfo() {
-        try (var mLOG = LOGGER_PLUS.logByMethodCall("methodInfo")) {
+        try (var mLOG = LOGGER_PLUS.groupLog("methodInfo")) {
             var str = new StringBuilder();
             mLOG.info(()-> str.append("I'm in").toString());
             assertEquals("I'm in", str.toString());
@@ -50,7 +47,7 @@ public class LoggerPlusTest {
 
     @Test
     public void methodWarn() {
-        try (var mLOG = LOGGER_PLUS.logByMethodCall("methodWarn")) {
+        try (var mLOG = LOGGER_PLUS.groupLog("methodWarn")) {
             var str = new StringBuilder();
             mLOG.warn(()-> str.append("I'm in").toString());
             assertEquals("I'm in", str.toString());
@@ -66,7 +63,7 @@ public class LoggerPlusTest {
 
     @Test
     public void methodError() {
-        try (var mLOG = LOGGER_PLUS.logByMethodCall("methodError")) {
+        try (var mLOG = LOGGER_PLUS.groupLog("methodError")) {
             var str = new StringBuilder();
             mLOG.error(()-> str.append("I'm in").toString());
             assertEquals("I'm in", str.toString());
@@ -83,7 +80,7 @@ public class LoggerPlusTest {
 
     @Test
     public void methodTrace() {
-        try (var mLOG = LOGGER_PLUS.logByMethodCall("methodTrace")) {
+        try (var mLOG = LOGGER_PLUS.groupLog("methodTrace")) {
             var str = new StringBuilder();
             mLOG.trace(()-> str.append("I'm in").toString());
             assertEquals("I'm in", str.toString());
@@ -99,7 +96,7 @@ public class LoggerPlusTest {
 
     @Test
     public void methodDebugMessage() {
-        try (var mLOG = Mockito.spy(LOGGER_PLUS.logByMethodCall("methodDebugMessage"))) {
+        try (var mLOG = Mockito.spy(LOGGER_PLUS.groupLog("methodDebugMessage"))) {
             var message = "I'm in.";
             mLOG.debug(message);
             Mockito.verify(mLOG).debug(message);
@@ -116,7 +113,7 @@ public class LoggerPlusTest {
 
     @Test
     public void methodInfoMessage() {
-        try (var mLOG = Mockito.spy(LOGGER_PLUS.logByMethodCall("methodInfoMessage"))) {
+        try (var mLOG = Mockito.spy(LOGGER_PLUS.groupLog("methodInfoMessage"))) {
             var message = "I'm in.";
             mLOG.info(message);
             Mockito.verify(mLOG).info(message);
@@ -133,7 +130,7 @@ public class LoggerPlusTest {
 
     @Test
     public void methodErrorMessage() {
-        try (var mLOG = Mockito.spy(LOGGER_PLUS.logByMethodCall("methodErrorMessage"))) {
+        try (var mLOG = Mockito.spy(LOGGER_PLUS.groupLog("methodErrorMessage"))) {
             var message = "I'm in.";
             mLOG.error(message);
             Mockito.verify(mLOG).error(message);
@@ -150,7 +147,7 @@ public class LoggerPlusTest {
 
     @Test
     public void methodWarnMessage() {
-        try (var mLOG = Mockito.spy(LOGGER_PLUS.logByMethodCall("methodWarnMessage"))) {
+        try (var mLOG = Mockito.spy(LOGGER_PLUS.groupLog("methodWarnMessage"))) {
             var message = "I'm in.";
             mLOG.warn(message);
             Mockito.verify(mLOG).warn(message);
@@ -167,7 +164,7 @@ public class LoggerPlusTest {
 
     @Test
     public void methodTraceMessage() {
-        try (var mLOG = Mockito.spy(LOGGER_PLUS.logByMethodCall("methodTraceMessage"))) {
+        try (var mLOG = Mockito.spy(LOGGER_PLUS.groupLog("methodTraceMessage"))) {
             var message = "I'm in.";
             mLOG.trace(message);
             Mockito.verify(mLOG).trace(message);
@@ -212,15 +209,8 @@ public class LoggerPlusTest {
     }
 
     @Test
-    public void stacktraceStringIOException() {
-        var exception = Mockito.mock(Exception.class);
-        Mockito.doThrow(IOException.class).when(exception).printStackTrace(Mockito.any(PrintWriter.class));
-        assertNull(LOGGER_PLUS.getStackTraceAsString(exception));
-    }
-
-    @Test
     public void withoutHeader() {
-        try (var mLOG = Mockito.spy(LOGGER_PLUS.logByMethodCall("methodTraceMessage", false))) {
+        try (var mLOG = Mockito.spy(LOGGER_PLUS.groupLog("methodTraceMessage", false))) {
             var message = "I'm in.";
             mLOG.trace(message);
             Mockito.verify(mLOG).trace(message);

@@ -18,7 +18,7 @@ import java.util.function.Supplier;
  */
 public class LoggerPlus {
 
-    private Logger logger;
+    final private Logger logger;
 
     /**
      * Creates an instance of LoggerPlus.
@@ -33,25 +33,40 @@ public class LoggerPlus {
      *
      * @author Ron Webb
      * @since 2019-11-27
+     * @deprecated Use GroupLogger instead.
      */
-    public static class MethodLogger implements AutoCloseable {
+    @Deprecated
+    public static class MethodLogger extends GroupLogger {
+        public MethodLogger(String methodName, LoggerPlus logPlus, boolean withHeader) {
+            super(methodName, logPlus, withHeader);
+        }
+    }
 
-        private LoggerPlus logPlus;
-        private String methodName;
+    /**
+     * Groups logging output by name.
+     *
+     * @author Ron Webb
+     * @since 1.1.0
+     */
+    public static class GroupLogger implements AutoCloseable {
 
-        private boolean withHeader;
+        final private LoggerPlus logPlus;
 
-        private BiFunction<String, String, String> messageBlock = (String ___methodName, String ___message) ->
+        final private String methodName;
+
+        final private boolean withHeader;
+
+        final private BiFunction<String, String, String> messageBlock = (String ___methodName, String ___message) ->
                 new StringJoiner(" ").add(___methodName).add(___message).toString();
 
         /**
-         * Create an instance of MethodLogger.
+         * Create an instance of GroupLogger.
          *
          * @param methodName The method name to associate the log messages.
          * @param logPlus An instance of LoggerPlus.
          * @param withHeader Place a log header message in each method class.
          */
-        public MethodLogger(String methodName, LoggerPlus logPlus, boolean withHeader) {
+        public GroupLogger(String methodName, LoggerPlus logPlus, boolean withHeader) {
             this.methodName = methodName;
             this.logPlus = logPlus;
             this.withHeader = withHeader;
@@ -255,7 +270,10 @@ public class LoggerPlus {
      * @param methodName The method name.
      * @param withHeader Place a log header message in each method class.
      * @return An instance of MethodLogger.
+     *
+     * @deprecated Use groupLog instead.
      */
+    @Deprecated
     public MethodLogger logByMethodCall(String methodName, boolean withHeader) {
         return new MethodLogger(methodName, this, withHeader);
     }
@@ -264,9 +282,35 @@ public class LoggerPlus {
      * Return an instance of MethodLogger that can be used log messages associated with the method.
      * @param methodName The method name.
      * @return An instance of MethodLogger.
+     *
+     * @deprecated Use groupLog instead.
      */
+    @Deprecated
     public MethodLogger logByMethodCall(String methodName) {
         return logByMethodCall(methodName, true);
+    }
+
+    /**
+     * Return an instance of GroupLogger that can be used log messages by group.
+     * @param groupName The group name.
+     * @param withHeader Place a log header message with each group.
+     * @return An instance of GroupLogger.
+     *
+     * @since 1.1.0
+     */
+    public GroupLogger groupLog(String groupName, boolean withHeader) {
+        return new GroupLogger(groupName, this, withHeader);
+    }
+
+    /**
+     * Return an instance of GroupLogger that can be used log messages by group.
+     * @param groupName The group name.
+     * @return An instance of GroupLogger.
+     *
+     * @since 1.1.0
+     */
+    public GroupLogger groupLog(String groupName) {
+        return groupLog(groupName, true);
     }
 
     /**
