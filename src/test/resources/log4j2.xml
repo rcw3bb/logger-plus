@@ -5,10 +5,10 @@
     </Properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <PatternLayout pattern="%d [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
         <RollingFile name="File" fileName="${filename}" filePattern="logs/$${date:yyyy-MM}/logger-plus-%d{MM-dd-yyyy}-%i.log.gz">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <PatternLayout pattern="%d [%t] %-5level %logger{36} - %msg%n"/>
             <DefaultRolloverStrategy max="10"/>
             <Policies>
                 <TimeBasedTriggeringPolicy />
