@@ -30,6 +30,11 @@ public class LoggerPlusTest {
     }
 
     @Test
+    public void nonMethodDebugF() {
+        LOGGER_PLUS.debugf("Debug Hello %s", "world");
+    }
+
+    @Test
     public void methodInfo() {
         try (var mLOG = LOGGER_PLUS.groupLog("methodInfo")) {
             var str = new StringBuilder();
@@ -43,6 +48,11 @@ public class LoggerPlusTest {
         var str = new StringBuilder();
         LOGGER_PLUS.info(()-> str.append("I'm in").toString());
         assertEquals("I'm in", str.toString());
+    }
+
+    @Test
+    public void nonMethodInfoF() {
+        LOGGER_PLUS.infof("Info Hello %s", "world");
     }
 
     @Test
@@ -62,6 +72,11 @@ public class LoggerPlusTest {
     }
 
     @Test
+    public void nonMethodWarnF() {
+        LOGGER_PLUS.warnf("Warn Hello %s", "world");
+    }
+
+    @Test
     public void methodError() {
         try (var mLOG = LOGGER_PLUS.groupLog("methodError")) {
             var str = new StringBuilder();
@@ -77,6 +92,10 @@ public class LoggerPlusTest {
         assertEquals("I'm in", str.toString());
     }
 
+    @Test
+    public void nonMethodErrorF() {
+        LOGGER_PLUS.errorf("Error Hello %s", "world");
+    }
 
     @Test
     public void methodTrace() {
@@ -92,6 +111,11 @@ public class LoggerPlusTest {
         var str = new StringBuilder();
         LOGGER_PLUS.trace(()-> str.append("I'm in").toString());
         assertEquals("I'm in", str.toString());
+    }
+
+    @Test
+    public void nonMethodTraceF() {
+        LOGGER_PLUS.tracef("Trace Hello %s", "world");
     }
 
     @Test
@@ -221,50 +245,45 @@ public class LoggerPlusTest {
     public void debugSupplier() {
         var logger = Mockito.spy(LOGGER);
         var loggerPlus = Mockito.spy(new LoggerPlus(logger));
-        Mockito.when(logger.isDebugEnabled()).thenReturn(false);
         var message = "I'm in";
         loggerPlus.debug(message);
-        Mockito.verify(logger, Mockito.times(0)).debug(message);
+        Mockito.verify(logger, Mockito.times(1)).debug(message);
     }
 
     @Test
     public void infoSupplier() {
         var logger = Mockito.spy(LOGGER);
         var loggerPlus = Mockito.spy(new LoggerPlus(logger));
-        Mockito.when(logger.isInfoEnabled()).thenReturn(false);
         var message = "I'm in";
         loggerPlus.info(message);
-        Mockito.verify(logger, Mockito.times(0)).info(message);
+        Mockito.verify(logger, Mockito.times(1)).info(message);
     }
 
     @Test
     public void errorSupplier() {
         var logger = Mockito.spy(LOGGER);
         var loggerPlus = Mockito.spy(new LoggerPlus(logger));
-        Mockito.when(logger.isErrorEnabled()).thenReturn(false);
         var message = "I'm in";
         loggerPlus.error(message);
-        Mockito.verify(logger, Mockito.times(0)).error(message);
+        Mockito.verify(logger, Mockito.times(1)).error(message);
     }
 
     @Test
     public void warnSupplier() {
         var logger = Mockito.spy(LOGGER);
         var loggerPlus = Mockito.spy(new LoggerPlus(logger));
-        Mockito.when(logger.isWarnEnabled()).thenReturn(false);
         var message = "I'm in";
         loggerPlus.warn(message);
-        Mockito.verify(logger, Mockito.times(0)).warn(message);
+        Mockito.verify(logger, Mockito.times(1)).warn(message);
     }
 
     @Test
     public void traceSupplier() {
         var logger = Mockito.spy(LOGGER);
         var loggerPlus = Mockito.spy(new LoggerPlus(logger));
-        Mockito.when(logger.isTraceEnabled()).thenReturn(false);
         var message = "I'm in";
         loggerPlus.trace(message);
-        Mockito.verify(logger, Mockito.times(0)).trace(message);
+        Mockito.verify(logger, Mockito.times(1)).trace(message);
     }
 
 }

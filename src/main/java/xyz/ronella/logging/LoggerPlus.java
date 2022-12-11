@@ -188,7 +188,15 @@ public class LoggerPlus {
      * @param message The message.
      */
     public void debug(final String message) {
-        debug(()-> message);
+        logger.debug(message);
+    }
+
+    private static String formattedMessage(final String format, final Object ... values) {
+        return String.format(format, values);
+    }
+
+    public void debugf(final String format, final Object ... values) {
+        debug(formattedMessage(format, values));
     }
 
     /**
@@ -206,7 +214,11 @@ public class LoggerPlus {
      * @param message The info message.
      */
     public void info(final String message) {
-        info(()-> message);
+        logger.info(message);
+    }
+
+    public void infof(final String format, final Object ... values) {
+        info(formattedMessage(format, values));
     }
 
     /**
@@ -224,7 +236,7 @@ public class LoggerPlus {
      * @param message The error message.
      */
     public void error(final String message) {
-        error(()-> message);
+        logger.error(message);
     }
 
     /**
@@ -237,12 +249,20 @@ public class LoggerPlus {
         }
     }
 
+    public void errorf(final String format, final Object ... values) {
+        error(formattedMessage(format, values));
+    }
+
     /**
      * Accepts a warning message.
      * @param message The warning message.
      */
     public void warn(final String message) {
-        warn(()-> message);
+        logger.warn(message);
+    }
+
+    public void warnf(final String format, final Object ... values) {
+        warn(formattedMessage(format, values));
     }
 
     /**
@@ -260,7 +280,11 @@ public class LoggerPlus {
      * @param message The trace message.
      */
     public void trace(final String message) {
-        trace(()-> message);
+        logger.trace(message);
+    }
+
+    public void tracef(final String format, final Object ... values) {
+        trace(formattedMessage(format, values));
     }
 
     /**
