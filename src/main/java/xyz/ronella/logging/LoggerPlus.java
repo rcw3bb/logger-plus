@@ -98,7 +98,7 @@ public class LoggerPlus {
          * @param message The message.
          */
         public void debug(final String message) {
-            debug(()-> message);
+            logPlus.debug(messageBlock.apply(groupName, message));
         }
 
         /**
@@ -109,12 +109,16 @@ public class LoggerPlus {
             logPlus.debug(() -> messageBlock.apply(groupName, message.get()));
         }
 
+        public void debugf(final String format, final Object ... values) {
+            debug(formattedMessage(format, values));
+        }
+
         /**
          * Accepts an info message at method level.
          * @param message The info message.
          */
         public void info(final String message) {
-            info(()-> message);
+            logPlus.info(messageBlock.apply(groupName,message));
         }
 
         /**
@@ -125,12 +129,16 @@ public class LoggerPlus {
             logPlus.info(() -> messageBlock.apply(groupName, message.get()));
         }
 
+        public void infof(final String format, final Object ... values) {
+            info(formattedMessage(format, values));
+        }
+
         /**
          * Accepts an error message at method level.
          * @param message The error message.
          */
         public void error(final String message) {
-            error(()-> message);
+            logPlus.error(messageBlock.apply(groupName,message));
         }
 
         /**
@@ -141,12 +149,16 @@ public class LoggerPlus {
             logPlus.error(() -> messageBlock.apply(groupName, message.get()));
         }
 
+        public void errorf(final String format, final Object ... values) {
+            error(formattedMessage(format, values));
+        }
+
         /**
          * Accepts a warning message at method level.
          * @param message The warning message.
          */
         public void warn(final String message) {
-            warn(()-> message);
+            logPlus.warn(messageBlock.apply(groupName,message));
         }
 
         /**
@@ -157,12 +169,16 @@ public class LoggerPlus {
             logPlus.warn(() -> messageBlock.apply(groupName, message.get()));
         }
 
+        public void warnf(final String format, final Object ... values) {
+            warn(formattedMessage(format, values));
+        }
+
         /**
          * Accepts a trace message at method level.
          * @param message The trace message.
          */
         public void trace(final String message) {
-            trace(()-> message);
+            logPlus.trace(messageBlock.apply(groupName,message));
         }
 
         /**
@@ -171,6 +187,10 @@ public class LoggerPlus {
          */
         public void trace(Supplier<String> message) {
             logPlus.trace(() -> messageBlock.apply(groupName, message.get()));
+        }
+
+        public void tracef(final String format, final Object ... values) {
+            trace(formattedMessage(format, values));
         }
     }
 

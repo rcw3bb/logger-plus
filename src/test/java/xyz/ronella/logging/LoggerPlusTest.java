@@ -23,6 +23,16 @@ public class LoggerPlusTest {
     }
 
     @Test
+    public void methodDebugF() {
+        try (var mLOG = Mockito.spy(LOGGER_PLUS.groupLog("methodDebugF"))) {
+            var format = "Hello %s";
+            var token = "world";
+            mLOG.debugf(format, token);
+            Mockito.verify(mLOG).debugf(format, token);
+        }
+    }
+
+    @Test
     public void nonMethodDebug() {
         var str = new StringBuilder();
         LOGGER_PLUS.debug(()-> str.append("I'm in").toString());
@@ -31,7 +41,11 @@ public class LoggerPlusTest {
 
     @Test
     public void nonMethodDebugF() {
-        LOGGER_PLUS.debugf("Debug Hello %s", "world");
+        var mockedLogger = Mockito.spy(LOGGER_PLUS);
+        var format = "Debug Hello %s";
+        var value = "world";
+        mockedLogger.debugf(format, value);
+        Mockito.verify(mockedLogger, Mockito.times(1)).debug(Mockito.anyString());
     }
 
     @Test
@@ -44,6 +58,16 @@ public class LoggerPlusTest {
     }
 
     @Test
+    public void methodInfoF() {
+        try (var mLOG = Mockito.spy(LOGGER_PLUS.groupLog("methodInfoF"))) {
+            var format = "Hello %s";
+            var token = "world";
+            mLOG.infof(format, token);
+            Mockito.verify(mLOG).infof(format, token);
+        }
+    }
+
+    @Test
     public void nonMethodInfo() {
         var str = new StringBuilder();
         LOGGER_PLUS.info(()-> str.append("I'm in").toString());
@@ -52,7 +76,9 @@ public class LoggerPlusTest {
 
     @Test
     public void nonMethodInfoF() {
-        LOGGER_PLUS.infof("Info Hello %s", "world");
+        var mockedLogger = Mockito.spy(LOGGER_PLUS);
+        mockedLogger.infof("Info Hello %s", "world");
+        Mockito.verify(mockedLogger, Mockito.times(1)).info(Mockito.anyString());
     }
 
     @Test
@@ -65,6 +91,16 @@ public class LoggerPlusTest {
     }
 
     @Test
+    public void methodWarnF() {
+        try (var mLOG = Mockito.spy(LOGGER_PLUS.groupLog("methodWarnF"))) {
+            var format = "Hello %s";
+            var token = "world";
+            mLOG.warnf(format, token);
+            Mockito.verify(mLOG).warnf(format, token);
+        }
+    }
+
+    @Test
     public void nonMethodWarn() {
         var str = new StringBuilder();
         LOGGER_PLUS.warn(()-> str.append("I'm in").toString());
@@ -73,7 +109,9 @@ public class LoggerPlusTest {
 
     @Test
     public void nonMethodWarnF() {
-        LOGGER_PLUS.warnf("Warn Hello %s", "world");
+        var mockedLogger = Mockito.spy(LOGGER_PLUS);
+        mockedLogger.warnf("Warn Hello %s", "world");
+        Mockito.verify(mockedLogger, Mockito.times(1)).warn(Mockito.anyString());
     }
 
     @Test
@@ -86,6 +124,16 @@ public class LoggerPlusTest {
     }
 
     @Test
+    public void methodErrorF() {
+        try (var mLOG = Mockito.spy(LOGGER_PLUS.groupLog("methodErrorF"))) {
+            var format = "Hello %s";
+            var token = "world";
+            mLOG.errorf(format, token);
+            Mockito.verify(mLOG).errorf(format, token);
+        }
+    }
+
+    @Test
     public void nonMethodError() {
         var str = new StringBuilder();
         LOGGER_PLUS.error(()-> str.append("I'm in").toString());
@@ -94,7 +142,9 @@ public class LoggerPlusTest {
 
     @Test
     public void nonMethodErrorF() {
-        LOGGER_PLUS.errorf("Error Hello %s", "world");
+        var mockedLogger = Mockito.spy(LOGGER_PLUS);
+        mockedLogger.errorf("Error Hello %s", "world");
+        Mockito.verify(mockedLogger, Mockito.times(1)).error(Mockito.anyString());
     }
 
     @Test
@@ -107,6 +157,16 @@ public class LoggerPlusTest {
     }
 
     @Test
+    public void methodTraceF() {
+        try (var mLOG = Mockito.spy(LOGGER_PLUS.groupLog("methodTraceF"))) {
+            var format = "Hello %s";
+            var token = "world";
+            mLOG.tracef(format, token);
+            Mockito.verify(mLOG).tracef(format, token);
+        }
+    }
+
+    @Test
     public void nonMethodTrace() {
         var str = new StringBuilder();
         LOGGER_PLUS.trace(()-> str.append("I'm in").toString());
@@ -115,7 +175,9 @@ public class LoggerPlusTest {
 
     @Test
     public void nonMethodTraceF() {
-        LOGGER_PLUS.tracef("Trace Hello %s", "world");
+        var mockedLogger = Mockito.spy(LOGGER_PLUS);
+        mockedLogger.tracef("Trace Hello %s", "world");
+        Mockito.verify(mockedLogger, Mockito.times(1)).trace(Mockito.anyString());
     }
 
     @Test
