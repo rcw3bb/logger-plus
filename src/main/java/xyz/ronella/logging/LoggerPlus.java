@@ -8,6 +8,7 @@ import java.io.StringWriter;
 import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -217,6 +218,36 @@ public class LoggerPlus {
 
     public void debugf(final String format, final Object ... values) {
         debug(formattedMessage(format, values));
+    }
+
+    public void withDebugEnabled(Consumer<Logger> logic) {
+        if (logic!=null && logger.isDebugEnabled()) {
+            logic.accept(logger);
+        }
+    }
+
+    public void withErrorEnabled(Consumer<Logger> logic) {
+        if (logic!=null && logger.isErrorEnabled()) {
+            logic.accept(logger);
+        }
+    }
+
+    public void withInfoEnabled(Consumer<Logger> logic) {
+        if (logic!=null && logger.isInfoEnabled()) {
+            logic.accept(logger);
+        }
+    }
+
+    public void withTraceEnabled(Consumer<Logger> logic) {
+        if (logic!=null && logger.isTraceEnabled()) {
+            logic.accept(logger);
+        }
+    }
+
+    public void withWarnEnabled(Consumer<Logger> logic) {
+        if (logic!=null && logger.isWarnEnabled()) {
+            logic.accept(logger);
+        }
     }
 
     /**
