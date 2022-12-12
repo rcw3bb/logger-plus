@@ -114,6 +114,10 @@ public class LoggerPlus {
             debug(formattedMessage(format, values));
         }
 
+        public void withDebugEnabled(Consumer<Logger> logic) {
+            logPlus.withDebugEnabled(logic);
+        }
+
         /**
          * Accepts an info message at method level.
          * @param message The info message.
@@ -132,6 +136,10 @@ public class LoggerPlus {
 
         public void infof(final String format, final Object ... values) {
             info(formattedMessage(format, values));
+        }
+
+        public void withInfoEnabled(Consumer<Logger> logic) {
+            logPlus.withInfoEnabled(logic);
         }
 
         /**
@@ -154,6 +162,10 @@ public class LoggerPlus {
             error(formattedMessage(format, values));
         }
 
+        public void withErrorEnabled(Consumer<Logger> logic) {
+            logPlus.withErrorEnabled(logic);
+        }
+
         /**
          * Accepts a warning message at method level.
          * @param message The warning message.
@@ -174,6 +186,10 @@ public class LoggerPlus {
             warn(formattedMessage(format, values));
         }
 
+        public void withWarnEnabled(Consumer<Logger> logic) {
+            logPlus.withWarnEnabled(logic);
+        }
+
         /**
          * Accepts a trace message at method level.
          * @param message The trace message.
@@ -192,6 +208,10 @@ public class LoggerPlus {
 
         public void tracef(final String format, final Object ... values) {
             trace(formattedMessage(format, values));
+        }
+
+        public void withTraceEnabled(Consumer<Logger> logic) {
+            logPlus.withTraceEnabled(logic);
         }
     }
 
