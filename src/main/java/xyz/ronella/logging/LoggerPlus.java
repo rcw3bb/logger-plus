@@ -110,10 +110,20 @@ public class LoggerPlus {
             logPlus.debug(() -> messageBlock.apply(groupName, message.get()));
         }
 
+        /**
+         * Accepts a String.format(ted) debug message.
+         * @param format The format for the message.
+         * @param values The values of the String.format(ted) message
+         * @since 1.2.0
+         */
         public void debugf(final String format, final Object ... values) {
             debug(formattedMessage(format, values));
         }
 
+        /**
+         * Accepts a logic that will be run in the context of isDebugEnabled()
+         * @param logic The logic to run.
+         */
         public void withDebugEnabled(Consumer<Logger> logic) {
             logPlus.withDebugEnabled(logic);
         }
@@ -134,10 +144,20 @@ public class LoggerPlus {
             logPlus.info(() -> messageBlock.apply(groupName, message.get()));
         }
 
+        /**
+         * Accepts a String.format(ted) info message.
+         * @param format The format for the message.
+         * @param values The values of the String.format(ted) message
+         * @since 1.2.0
+         */
         public void infof(final String format, final Object ... values) {
             info(formattedMessage(format, values));
         }
 
+        /**
+         * Accepts a logic that will be run in the context of isInfoEnabled()
+         * @param logic The logic to run.
+         */
         public void withInfoEnabled(Consumer<Logger> logic) {
             logPlus.withInfoEnabled(logic);
         }
@@ -158,10 +178,20 @@ public class LoggerPlus {
             logPlus.error(() -> messageBlock.apply(groupName, message.get()));
         }
 
+        /**
+         * Accepts a String.format(ted) error message.
+         * @param format The format for the message.
+         * @param values The values of the String.format(ted) message
+         * @since 1.2.0
+         */
         public void errorf(final String format, final Object ... values) {
             error(formattedMessage(format, values));
         }
 
+        /**
+         * Accepts a logic that will be run in the context of isErrorEnabled()
+         * @param logic The logic to run.
+         */
         public void withErrorEnabled(Consumer<Logger> logic) {
             logPlus.withErrorEnabled(logic);
         }
@@ -182,10 +212,20 @@ public class LoggerPlus {
             logPlus.warn(() -> messageBlock.apply(groupName, message.get()));
         }
 
+        /**
+         * Accepts a String.format(ted) warn message.
+         * @param format The format for the message.
+         * @param values The values of the String.format(ted) message
+         * @since 1.2.0
+         */
         public void warnf(final String format, final Object ... values) {
             warn(formattedMessage(format, values));
         }
 
+        /**
+         * Accepts a logic that will be run in the context of isWarnEnabled()
+         * @param logic The logic to run.
+         */
         public void withWarnEnabled(Consumer<Logger> logic) {
             logPlus.withWarnEnabled(logic);
         }
@@ -206,10 +246,20 @@ public class LoggerPlus {
             logPlus.trace(() -> messageBlock.apply(groupName, message.get()));
         }
 
+        /**
+         * Accepts a String.format(ted) trace message.
+         * @param format The format for the message.
+         * @param values The values of the String.format(ted) message
+         * @since 1.2.0
+         */
         public void tracef(final String format, final Object ... values) {
             trace(formattedMessage(format, values));
         }
 
+        /**
+         * Accepts a logic that will be run in the context of isTraceEnabled()
+         * @param logic The logic to run.
+         */
         public void withTraceEnabled(Consumer<Logger> logic) {
             logPlus.withTraceEnabled(logic);
         }
@@ -236,34 +286,60 @@ public class LoggerPlus {
         return String.format(format, values);
     }
 
+    /**
+     * Accepts a String.format(ted) debug message.
+     * @param format The format for the message.
+     * @param values The values of the String.format(ted) message
+     * @since 1.2.0
+     */
     public void debugf(final String format, final Object ... values) {
         debug(formattedMessage(format, values));
     }
 
+    /**
+     * Accepts a logic that will be run in the context of isDebugEnabled()
+     * @param logic The logic to run.
+     */
     public void withDebugEnabled(Consumer<Logger> logic) {
         if (logic!=null && logger.isDebugEnabled()) {
             logic.accept(logger);
         }
     }
 
+    /**
+     * Accepts a logic that will be run in the context of isErrorEnabled()
+     * @param logic The logic to run.
+     */
     public void withErrorEnabled(Consumer<Logger> logic) {
         if (logic!=null && logger.isErrorEnabled()) {
             logic.accept(logger);
         }
     }
 
+    /**
+     * Accepts a logic that will be run in the context of isInfoEnabled()
+     * @param logic The logic to run.
+     */
     public void withInfoEnabled(Consumer<Logger> logic) {
         if (logic!=null && logger.isInfoEnabled()) {
             logic.accept(logger);
         }
     }
 
+    /**
+     * Accepts a logic that will be run in the context of isTraceEnabled()
+     * @param logic The logic to run.
+     */
     public void withTraceEnabled(Consumer<Logger> logic) {
         if (logic!=null && logger.isTraceEnabled()) {
             logic.accept(logger);
         }
     }
 
+    /**
+     * Accepts a logic that will be run in the context of isWarnEnabled()
+     * @param logic The logic to run.
+     */
     public void withWarnEnabled(Consumer<Logger> logic) {
         if (logic!=null && logger.isWarnEnabled()) {
             logic.accept(logger);
@@ -288,6 +364,12 @@ public class LoggerPlus {
         logger.info(message);
     }
 
+    /**
+     * Accepts a String.format(ted) info message.
+     * @param format The format for the message.
+     * @param values The values of the String.format(ted) message
+     * @since 1.2.0
+     */
     public void infof(final String format, final Object ... values) {
         info(formattedMessage(format, values));
     }
@@ -320,6 +402,13 @@ public class LoggerPlus {
         }
     }
 
+
+    /**
+     * Accepts a String.format(ted) error message.
+     * @param format The format for the message.
+     * @param values The values of the String.format(ted) message
+     * @since 1.2.0
+     */
     public void errorf(final String format, final Object ... values) {
         error(formattedMessage(format, values));
     }
@@ -332,6 +421,12 @@ public class LoggerPlus {
         logger.warn(message);
     }
 
+    /**
+     * Accepts a String.format(ted) warn message.
+     * @param format The format for the message.
+     * @param values The values of the String.format(ted) message
+     * @since 1.2.0
+     */
     public void warnf(final String format, final Object ... values) {
         warn(formattedMessage(format, values));
     }
@@ -354,6 +449,12 @@ public class LoggerPlus {
         logger.trace(message);
     }
 
+    /**
+     * Accepts a String.format(ted) trace message.
+     * @param format The format for the message.
+     * @param values The values of the String.format(ted) message
+     * @since 1.2.0
+     */
     public void tracef(final String format, final Object ... values) {
         trace(formattedMessage(format, values));
     }
