@@ -2,7 +2,7 @@
 
 ## Pre-requisite
 
-* Java 11
+* Java 17
 
 ## Testing
 
