@@ -26,8 +26,8 @@ public class LoggerPlusTest {
         try (var mLOG = Mockito.spy(LOGGER_PLUS.groupLog("methodDebugF"))) {
             var format = "Hello %s";
             var token = "world";
-            mLOG.debugf(format, token);
-            Mockito.verify(mLOG).debugf(format, token);
+            mLOG.debug(format, token);
+            Mockito.verify(mLOG).debug(format, token);
         }
     }
 
@@ -144,8 +144,8 @@ public class LoggerPlusTest {
         try (var mLOG = Mockito.spy(LOGGER_PLUS.groupLog("methodInfoF"))) {
             var format = "Hello %s";
             var token = "world";
-            mLOG.infof(format, token);
-            Mockito.verify(mLOG).infof(format, token);
+            mLOG.info(format, token);
+            Mockito.verify(mLOG).info(format, token);
         }
     }
 
@@ -260,8 +260,8 @@ public class LoggerPlusTest {
         try (var mLOG = Mockito.spy(LOGGER_PLUS.groupLog("methodWarnF"))) {
             var format = "Hello %s";
             var token = "world";
-            mLOG.warnf(format, token);
-            Mockito.verify(mLOG).warnf(format, token);
+            mLOG.warn(format, token);
+            Mockito.verify(mLOG).warn(format, token);
         }
     }
 
@@ -376,8 +376,8 @@ public class LoggerPlusTest {
         try (var mLOG = Mockito.spy(LOGGER_PLUS.groupLog("methodErrorF"))) {
             var format = "Hello %s";
             var token = "world";
-            mLOG.errorf(format, token);
-            Mockito.verify(mLOG).errorf(format, token);
+            mLOG.error(format, token);
+            Mockito.verify(mLOG).error(format, token);
         }
     }
 
@@ -492,8 +492,8 @@ public class LoggerPlusTest {
         try (var mLOG = Mockito.spy(LOGGER_PLUS.groupLog("methodTraceF"))) {
             var format = "Hello %s";
             var token = "world";
-            mLOG.tracef(format, token);
-            Mockito.verify(mLOG).tracef(format, token);
+            mLOG.trace(format, token);
+            Mockito.verify(mLOG).trace(format, token);
         }
     }
 

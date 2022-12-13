@@ -25,7 +25,7 @@ public class LoggerPlus {
      * Creates an instance of LoggerPlus.
      * @param logger Accepts an instance of Logger.
      */
-    public LoggerPlus(Logger logger) {
+    public LoggerPlus(final Logger logger) {
         this.logger = logger;
     }
 
@@ -75,7 +75,7 @@ public class LoggerPlus {
          * @param logPlus An instance of LoggerPlus.
          * @param withHeader Place a log header message in each method class.
          */
-        public GroupLogger(String groupName, LoggerPlus logPlus, boolean withHeader) {
+        public GroupLogger(final String groupName, final LoggerPlus logPlus, final boolean withHeader) {
             this.groupName = groupName;
             this.logPlus = logPlus;
             this.withHeader = withHeader;
@@ -106,7 +106,7 @@ public class LoggerPlus {
          * Accepts a supplier of a message at method level.
          * @param message The supplier of message.
          */
-        public void debug(Supplier<String> message) {
+        public void debug(final Supplier<String> message) {
             logPlus.debug(() -> messageBlock.apply(groupName, message.get()));
         }
 
@@ -116,7 +116,7 @@ public class LoggerPlus {
          * @param values The values of the String.format(ted) message
          * @since 1.2.0
          */
-        public void debugf(final String format, final Object ... values) {
+        public void debug(final String format, final Object ... values) {
             debug(formattedMessage(format, values));
         }
 
@@ -124,7 +124,7 @@ public class LoggerPlus {
          * Accepts a logic that will be run in the context of isDebugEnabled()
          * @param logic The logic to run.
          */
-        public void withDebugEnabled(Consumer<Logger> logic) {
+        public void withDebugEnabled(final Consumer<Logger> logic) {
             logPlus.withDebugEnabled(logic);
         }
 
@@ -140,7 +140,7 @@ public class LoggerPlus {
          * Accepts a supplier of a message at method level.
          * @param message The supplier of message.
          */
-        public void info(Supplier<String> message) {
+        public void info(final Supplier<String> message) {
             logPlus.info(() -> messageBlock.apply(groupName, message.get()));
         }
 
@@ -150,7 +150,7 @@ public class LoggerPlus {
          * @param values The values of the String.format(ted) message
          * @since 1.2.0
          */
-        public void infof(final String format, final Object ... values) {
+        public void info(final String format, final Object ... values) {
             info(formattedMessage(format, values));
         }
 
@@ -158,7 +158,7 @@ public class LoggerPlus {
          * Accepts a logic that will be run in the context of isInfoEnabled()
          * @param logic The logic to run.
          */
-        public void withInfoEnabled(Consumer<Logger> logic) {
+        public void withInfoEnabled(final Consumer<Logger> logic) {
             logPlus.withInfoEnabled(logic);
         }
 
@@ -174,7 +174,7 @@ public class LoggerPlus {
          * Accepts a supplier of a message at method level.
          * @param message The supplier of message.
          */
-        public void error(Supplier<String> message) {
+        public void error(final Supplier<String> message) {
             logPlus.error(() -> messageBlock.apply(groupName, message.get()));
         }
 
@@ -184,7 +184,7 @@ public class LoggerPlus {
          * @param values The values of the String.format(ted) message
          * @since 1.2.0
          */
-        public void errorf(final String format, final Object ... values) {
+        public void error(final String format, final Object ... values) {
             error(formattedMessage(format, values));
         }
 
@@ -192,7 +192,7 @@ public class LoggerPlus {
          * Accepts a logic that will be run in the context of isErrorEnabled()
          * @param logic The logic to run.
          */
-        public void withErrorEnabled(Consumer<Logger> logic) {
+        public void withErrorEnabled(final Consumer<Logger> logic) {
             logPlus.withErrorEnabled(logic);
         }
 
@@ -208,7 +208,7 @@ public class LoggerPlus {
          * Accepts a supplier of a message at method level.
          * @param message The supplier of message.
          */
-        public void warn(Supplier<String> message) {
+        public void warn(final Supplier<String> message) {
             logPlus.warn(() -> messageBlock.apply(groupName, message.get()));
         }
 
@@ -218,7 +218,7 @@ public class LoggerPlus {
          * @param values The values of the String.format(ted) message
          * @since 1.2.0
          */
-        public void warnf(final String format, final Object ... values) {
+        public void warn(final String format, final Object ... values) {
             warn(formattedMessage(format, values));
         }
 
@@ -226,7 +226,7 @@ public class LoggerPlus {
          * Accepts a logic that will be run in the context of isWarnEnabled()
          * @param logic The logic to run.
          */
-        public void withWarnEnabled(Consumer<Logger> logic) {
+        public void withWarnEnabled(final Consumer<Logger> logic) {
             logPlus.withWarnEnabled(logic);
         }
 
@@ -242,7 +242,7 @@ public class LoggerPlus {
          * Accepts a supplier of a message at method level.
          * @param message The supplier of message.
          */
-        public void trace(Supplier<String> message) {
+        public void trace(final Supplier<String> message) {
             logPlus.trace(() -> messageBlock.apply(groupName, message.get()));
         }
 
@@ -252,7 +252,7 @@ public class LoggerPlus {
          * @param values The values of the String.format(ted) message
          * @since 1.2.0
          */
-        public void tracef(final String format, final Object ... values) {
+        public void trace(final String format, final Object ... values) {
             trace(formattedMessage(format, values));
         }
 
@@ -260,7 +260,7 @@ public class LoggerPlus {
          * Accepts a logic that will be run in the context of isTraceEnabled()
          * @param logic The logic to run.
          */
-        public void withTraceEnabled(Consumer<Logger> logic) {
+        public void withTraceEnabled(final Consumer<Logger> logic) {
             logPlus.withTraceEnabled(logic);
         }
     }
@@ -300,7 +300,7 @@ public class LoggerPlus {
      * Accepts a logic that will be run in the context of isDebugEnabled()
      * @param logic The logic to run.
      */
-    public void withDebugEnabled(Consumer<Logger> logic) {
+    public void withDebugEnabled(final Consumer<Logger> logic) {
         if (logic!=null && logger.isDebugEnabled()) {
             logic.accept(logger);
         }
@@ -310,7 +310,7 @@ public class LoggerPlus {
      * Accepts a logic that will be run in the context of isErrorEnabled()
      * @param logic The logic to run.
      */
-    public void withErrorEnabled(Consumer<Logger> logic) {
+    public void withErrorEnabled(final Consumer<Logger> logic) {
         if (logic!=null && logger.isErrorEnabled()) {
             logic.accept(logger);
         }
@@ -320,7 +320,7 @@ public class LoggerPlus {
      * Accepts a logic that will be run in the context of isInfoEnabled()
      * @param logic The logic to run.
      */
-    public void withInfoEnabled(Consumer<Logger> logic) {
+    public void withInfoEnabled(final Consumer<Logger> logic) {
         if (logic!=null && logger.isInfoEnabled()) {
             logic.accept(logger);
         }
@@ -330,7 +330,7 @@ public class LoggerPlus {
      * Accepts a logic that will be run in the context of isTraceEnabled()
      * @param logic The logic to run.
      */
-    public void withTraceEnabled(Consumer<Logger> logic) {
+    public void withTraceEnabled(final Consumer<Logger> logic) {
         if (logic!=null && logger.isTraceEnabled()) {
             logic.accept(logger);
         }
@@ -340,7 +340,7 @@ public class LoggerPlus {
      * Accepts a logic that will be run in the context of isWarnEnabled()
      * @param logic The logic to run.
      */
-    public void withWarnEnabled(Consumer<Logger> logic) {
+    public void withWarnEnabled(final Consumer<Logger> logic) {
         if (logic!=null && logger.isWarnEnabled()) {
             logic.accept(logger);
         }
@@ -478,7 +478,7 @@ public class LoggerPlus {
      * @deprecated Use groupLog instead.
      */
     @Deprecated
-    public MethodLogger logByMethodCall(String methodName, boolean withHeader) {
+    public MethodLogger logByMethodCall(final String methodName, final boolean withHeader) {
         return new MethodLogger(methodName, this, withHeader);
     }
 
@@ -490,7 +490,7 @@ public class LoggerPlus {
      * @deprecated Use groupLog instead.
      */
     @Deprecated
-    public MethodLogger logByMethodCall(String methodName) {
+    public MethodLogger logByMethodCall(final String methodName) {
         return logByMethodCall(methodName, true);
     }
 
@@ -502,7 +502,7 @@ public class LoggerPlus {
      *
      * @since 1.1.0
      */
-    public GroupLogger groupLog(String groupName, boolean withHeader) {
+    public GroupLogger groupLog(final String groupName, final boolean withHeader) {
         return new GroupLogger(groupName, this, withHeader);
     }
 
@@ -513,7 +513,7 @@ public class LoggerPlus {
      *
      * @since 1.1.0
      */
-    public GroupLogger groupLog(String groupName) {
+    public GroupLogger groupLog(final String groupName) {
         return groupLog(groupName, true);
     }
 
@@ -523,7 +523,7 @@ public class LoggerPlus {
      * @param exception An instance of exception.
      * @return The string equivalent of stacktrace.
      */
-    public String getStackTraceAsString(Exception exception) {
+    public String getStackTraceAsString(final Exception exception) {
         if (null!=exception) {
             try (var sWriter = new StringWriter();
                  var pWriter = new PrintWriter(sWriter)) {
