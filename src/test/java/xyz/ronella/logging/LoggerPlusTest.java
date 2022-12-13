@@ -32,48 +32,6 @@ public class LoggerPlusTest {
     }
 
     @Test
-    public void methodDebugEnabledTrue() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        try(var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger).groupLog("debug"))) {
-            var message = new StringBuilder();
-
-            Mockito.doReturn(true).when(mockedLogger).isDebugEnabled();
-
-            mockedLoggerPlus.withDebugEnabled(logger -> {
-                message.append("debug");
-            });
-
-            assertEquals("debug", message.toString());
-        }
-    }
-
-    @Test
-    public void methodDebugEnabledNullLogic() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        try(var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger).groupLog("debug"))) {
-            Mockito.doReturn(true).when(mockedLogger).isDebugEnabled();
-            mockedLoggerPlus.withDebugEnabled(null);
-        }
-        Mockito.verify(mockedLogger, Mockito.times(2)).isDebugEnabled();
-    }
-
-    @Test
-    public void methodDebugEnabledFalse() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        try(var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger).groupLog("debug"))) {
-            var message = new StringBuilder();
-
-            Mockito.doReturn(false).when(mockedLogger).isDebugEnabled();
-
-            mockedLoggerPlus.withDebugEnabled(logger -> {
-                message.append("debug");
-            });
-
-            assertTrue(message.toString().isEmpty());
-        }
-    }
-
-    @Test
     public void nonMethodDebug() {
         var str = new StringBuilder();
         LOGGER_PLUS.debug(()-> str.append("I'm in").toString());
@@ -87,47 +45,6 @@ public class LoggerPlusTest {
         var value = "world";
         mockedLogger.debug(format, value);
         Mockito.verify(mockedLogger, Mockito.times(1)).debug(Mockito.anyString());
-    }
-
-    @Test
-    public void nonMethodDebugEnabledTrue() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger));
-        var message = new StringBuilder();
-
-        Mockito.doReturn(true).when(mockedLogger).isDebugEnabled();
-
-        mockedLoggerPlus.withDebugEnabled(logger -> {
-            message.append("debug");
-        });
-
-        assertEquals("debug", message.toString());
-    }
-
-    @Test
-    public void nonMethodDebugEnabledNullLogic() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger));
-        Mockito.doReturn(true).when(mockedLogger).isDebugEnabled();
-
-        mockedLoggerPlus.withDebugEnabled(null);
-
-        Mockito.verify(mockedLogger, Mockito.times(0)).isDebugEnabled();
-    }
-
-    @Test
-    public void nonMethodDebugEnabledFalse() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger));
-        var message = new StringBuilder();
-
-        Mockito.doReturn(false).when(mockedLogger).isDebugEnabled();
-
-        mockedLoggerPlus.withDebugEnabled(logger -> {
-            message.append("debug");
-        });
-
-        assertTrue(message.toString().isEmpty());
     }
 
     @Test
@@ -150,48 +67,6 @@ public class LoggerPlusTest {
     }
 
     @Test
-    public void methodInfoEnabledTrue() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        try(var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger).groupLog("info"))) {
-            var message = new StringBuilder();
-
-            Mockito.doReturn(true).when(mockedLogger).isInfoEnabled();
-
-            mockedLoggerPlus.withInfoEnabled(logger -> {
-                message.append("info");
-            });
-
-            assertEquals("info", message.toString());
-        }
-    }
-
-    @Test
-    public void methodInfoEnabledNullLogic() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        try(var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger).groupLog("info"))) {
-            Mockito.doReturn(true).when(mockedLogger).isInfoEnabled();
-            mockedLoggerPlus.withInfoEnabled(null);
-            Mockito.verify(mockedLogger, Mockito.times(0)).isInfoEnabled();
-        }
-    }
-
-    @Test
-    public void methodInfoEnabledFalse() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        try(var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger).groupLog("info"))) {
-            var message = new StringBuilder();
-
-            Mockito.doReturn(false).when(mockedLogger).isInfoEnabled();
-
-            mockedLoggerPlus.withInfoEnabled(logger -> {
-                message.append("info");
-            });
-
-            assertTrue(message.toString().isEmpty());
-        }
-    }
-
-    @Test
     public void nonMethodInfo() {
         var str = new StringBuilder();
         LOGGER_PLUS.info(()-> str.append("I'm in").toString());
@@ -203,47 +78,6 @@ public class LoggerPlusTest {
         var mockedLogger = Mockito.spy(LOGGER_PLUS);
         mockedLogger.info("Info Hello %s", "world");
         Mockito.verify(mockedLogger, Mockito.times(1)).info(Mockito.anyString());
-    }
-
-    @Test
-    public void nonMethodInfoEnabledTrue() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger));
-        var message = new StringBuilder();
-
-        Mockito.doReturn(true).when(mockedLogger).isInfoEnabled();
-
-        mockedLoggerPlus.withInfoEnabled(logger -> {
-            message.append("info");
-        });
-
-        assertEquals("info", message.toString());
-    }
-
-    @Test
-    public void nonMethodInfoEnabledNullLogic() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger));
-        Mockito.doReturn(true).when(mockedLogger).isInfoEnabled();
-
-        mockedLoggerPlus.withInfoEnabled(null);
-
-        Mockito.verify(mockedLogger, Mockito.times(0)).isInfoEnabled();
-    }
-
-    @Test
-    public void nonMethodInfoEnabledFalse() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger));
-        var message = new StringBuilder();
-
-        Mockito.doReturn(false).when(mockedLogger).isInfoEnabled();
-
-        mockedLoggerPlus.withInfoEnabled(logger -> {
-            message.append("info");
-        });
-
-        assertTrue(message.toString().isEmpty());
     }
 
     @Test
@@ -266,48 +100,6 @@ public class LoggerPlusTest {
     }
 
     @Test
-    public void methodWarnEnabledTrue() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        try(var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger).groupLog("warn"))) {
-            var message = new StringBuilder();
-
-            Mockito.doReturn(true).when(mockedLogger).isWarnEnabled();
-
-            mockedLoggerPlus.withWarnEnabled(logger -> {
-                message.append("warn");
-            });
-
-            assertEquals("warn", message.toString());
-        }
-    }
-
-    @Test
-    public void methodWarnEnabledNullLogic() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        try(var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger).groupLog("warn"))) {
-            Mockito.doReturn(true).when(mockedLogger).isWarnEnabled();
-            mockedLoggerPlus.withWarnEnabled(null);
-            Mockito.verify(mockedLogger, Mockito.times(0)).isWarnEnabled();
-        }
-    }
-
-    @Test
-    public void methodWarnEnabledFalse() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        try(var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger).groupLog("warn"))) {
-            var message = new StringBuilder();
-
-            Mockito.doReturn(false).when(mockedLogger).isWarnEnabled();
-
-            mockedLoggerPlus.withWarnEnabled(logger -> {
-                message.append("warn");
-            });
-
-            assertTrue(message.toString().isEmpty());
-        }
-    }
-
-    @Test
     public void nonMethodWarn() {
         var str = new StringBuilder();
         LOGGER_PLUS.warn(()-> str.append("I'm in").toString());
@@ -319,47 +111,6 @@ public class LoggerPlusTest {
         var mockedLogger = Mockito.spy(LOGGER_PLUS);
         mockedLogger.warn("Warn Hello %s", "world");
         Mockito.verify(mockedLogger, Mockito.times(1)).warn(Mockito.anyString());
-    }
-
-    @Test
-    public void nonMethodWarnEnabledTrue() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger));
-        var message = new StringBuilder();
-
-        Mockito.doReturn(true).when(mockedLogger).isWarnEnabled();
-
-        mockedLoggerPlus.withWarnEnabled(logger -> {
-            message.append("warn");
-        });
-
-        assertEquals("warn", message.toString());
-    }
-
-    @Test
-    public void nonMethodWarnEnabledNullLogic() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger));
-        Mockito.doReturn(true).when(mockedLogger).isWarnEnabled();
-
-        mockedLoggerPlus.withWarnEnabled(null);
-
-        Mockito.verify(mockedLogger, Mockito.times(0)).isWarnEnabled();
-    }
-
-    @Test
-    public void nonMethodWarnEnabledFalse() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger));
-        var message = new StringBuilder();
-
-        Mockito.doReturn(false).when(mockedLogger).isWarnEnabled();
-
-        mockedLoggerPlus.withWarnEnabled(logger -> {
-            message.append("error");
-        });
-
-        assertTrue(message.toString().isEmpty());
     }
 
     @Test
@@ -382,48 +133,6 @@ public class LoggerPlusTest {
     }
 
     @Test
-    public void methodErrorEnabledTrue() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        try(var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger).groupLog("error"))) {
-            var message = new StringBuilder();
-
-            Mockito.doReturn(true).when(mockedLogger).isErrorEnabled();
-
-            mockedLoggerPlus.withErrorEnabled(logger -> {
-                message.append("error");
-            });
-
-            assertEquals("error", message.toString());
-        }
-    }
-
-    @Test
-    public void methodErrorEnabledNullLogic() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        try(var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger).groupLog("error"))) {
-            Mockito.doReturn(true).when(mockedLogger).isErrorEnabled();
-            mockedLoggerPlus.withErrorEnabled(null);
-            Mockito.verify(mockedLogger, Mockito.times(0)).isErrorEnabled();
-        }
-    }
-
-    @Test
-    public void methodErrorEnabledFalse() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        try(var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger).groupLog("error"))) {
-            var message = new StringBuilder();
-
-            Mockito.doReturn(false).when(mockedLogger).isErrorEnabled();
-
-            mockedLoggerPlus.withErrorEnabled(logger -> {
-                message.append("debug");
-            });
-
-            assertTrue(message.toString().isEmpty());
-        }
-    }
-
-    @Test
     public void nonMethodError() {
         var str = new StringBuilder();
         LOGGER_PLUS.error(()-> str.append("I'm in").toString());
@@ -435,47 +144,6 @@ public class LoggerPlusTest {
         var mockedLogger = Mockito.spy(LOGGER_PLUS);
         mockedLogger.error("Error Hello %s", "world");
         Mockito.verify(mockedLogger, Mockito.times(1)).error(Mockito.anyString());
-    }
-
-    @Test
-    public void nonMethodErrorEnabledTrue() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger));
-        var message = new StringBuilder();
-
-        Mockito.doReturn(true).when(mockedLogger).isErrorEnabled();
-
-        mockedLoggerPlus.withErrorEnabled(logger -> {
-            message.append("error");
-        });
-
-        assertEquals("error", message.toString());
-    }
-
-    @Test
-    public void nonMethodErrorEnabledNullLogic() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger));
-        Mockito.doReturn(true).when(mockedLogger).isErrorEnabled();
-
-        mockedLoggerPlus.withErrorEnabled(null);
-
-        Mockito.verify(mockedLogger, Mockito.times(0)).isErrorEnabled();
-    }
-
-    @Test
-    public void nonMethodErrorEnabledFalse() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger));
-        var message = new StringBuilder();
-
-        Mockito.doReturn(false).when(mockedLogger).isErrorEnabled();
-
-        mockedLoggerPlus.withErrorEnabled(logger -> {
-            message.append("error");
-        });
-
-        assertTrue(message.toString().isEmpty());
     }
 
     @Test
@@ -498,48 +166,6 @@ public class LoggerPlusTest {
     }
 
     @Test
-    public void methodTraceEnabledTrue() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        try(var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger).groupLog("trace"))) {
-            var message = new StringBuilder();
-
-            Mockito.doReturn(true).when(mockedLogger).isTraceEnabled();
-
-            mockedLoggerPlus.withTraceEnabled(logger -> {
-                message.append("trace");
-            });
-
-            assertEquals("trace", message.toString());
-        }
-    }
-
-    @Test
-    public void methodTraceEnabledNullLogic() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        try(var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger).groupLog("trace"))) {
-            Mockito.doReturn(true).when(mockedLogger).isTraceEnabled();
-            mockedLoggerPlus.withTraceEnabled(null);
-            Mockito.verify(mockedLogger, Mockito.times(0)).isTraceEnabled();
-        }
-    }
-
-    @Test
-    public void methodTraceEnabledFalse() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        try(var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger).groupLog("trace"))) {
-            var message = new StringBuilder();
-
-            Mockito.doReturn(false).when(mockedLogger).isTraceEnabled();
-
-            mockedLoggerPlus.withTraceEnabled(logger -> {
-                message.append("debug");
-            });
-
-            assertTrue(message.toString().isEmpty());
-        }
-    }
-
-    @Test
     public void nonMethodTrace() {
         var str = new StringBuilder();
         LOGGER_PLUS.trace(()-> str.append("I'm in").toString());
@@ -551,47 +177,6 @@ public class LoggerPlusTest {
         var mockedLogger = Mockito.spy(LOGGER_PLUS);
         mockedLogger.trace("Trace Hello %s", "world");
         Mockito.verify(mockedLogger, Mockito.times(1)).trace(Mockito.anyString());
-    }
-
-    @Test
-    public void nonMethodTraceEnabledTrue() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger));
-        var message = new StringBuilder();
-
-        Mockito.doReturn(true).when(mockedLogger).isTraceEnabled();
-
-        mockedLoggerPlus.withTraceEnabled(logger -> {
-            message.append("trace");
-        });
-
-        assertEquals("trace", message.toString());
-    }
-
-    @Test
-    public void nonMethodTraceEnabledNullLogic() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger));
-        Mockito.doReturn(true).when(mockedLogger).isTraceEnabled();
-
-        mockedLoggerPlus.withTraceEnabled(null);
-
-        Mockito.verify(mockedLogger, Mockito.times(0)).isTraceEnabled();
-    }
-
-    @Test
-    public void nonMethodTraceEnabledFalse() {
-        var mockedLogger = Mockito.mock(Logger.class);
-        var mockedLoggerPlus = Mockito.spy(new LoggerPlus(mockedLogger));
-        var message = new StringBuilder();
-
-        Mockito.doReturn(false).when(mockedLogger).isTraceEnabled();
-
-        mockedLoggerPlus.withTraceEnabled(logger -> {
-            message.append("trace");
-        });
-
-        assertTrue(message.toString().isEmpty());
     }
 
     @Test
