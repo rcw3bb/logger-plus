@@ -292,7 +292,7 @@ public class LoggerPlus {
      * @param values The values of the String.format(ted) message
      * @since 1.2.0
      */
-    public void debugf(final String format, final Object ... values) {
+    public void debug(final String format, final Object ... values) {
         debug(formattedMessage(format, values));
     }
 
@@ -370,7 +370,7 @@ public class LoggerPlus {
      * @param values The values of the String.format(ted) message
      * @since 1.2.0
      */
-    public void infof(final String format, final Object ... values) {
+    public void info(final String format, final Object ... values) {
         info(formattedMessage(format, values));
     }
 
@@ -409,7 +409,7 @@ public class LoggerPlus {
      * @param values The values of the String.format(ted) message
      * @since 1.2.0
      */
-    public void errorf(final String format, final Object ... values) {
+    public void error(final String format, final Object ... values) {
         error(formattedMessage(format, values));
     }
 
@@ -427,7 +427,7 @@ public class LoggerPlus {
      * @param values The values of the String.format(ted) message
      * @since 1.2.0
      */
-    public void warnf(final String format, final Object ... values) {
+    public void warn(final String format, final Object ... values) {
         warn(formattedMessage(format, values));
     }
 
@@ -455,7 +455,7 @@ public class LoggerPlus {
      * @param values The values of the String.format(ted) message
      * @since 1.2.0
      */
-    public void tracef(final String format, final Object ... values) {
+    public void trace(final String format, final Object ... values) {
         trace(formattedMessage(format, values));
     }
 
