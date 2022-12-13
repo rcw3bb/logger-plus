@@ -350,7 +350,7 @@ public class LoggerPlus {
      * Accepts a supplier of a message.
      * @param message The supplier of message.
      */
-    public void debug(Supplier<String> message) {
+    public void debug(final Supplier<String> message) {
         if (logger.isDebugEnabled()) {
             Optional.ofNullable(message).ifPresent(___message -> logger.debug(___message.get()));
         }
@@ -378,7 +378,7 @@ public class LoggerPlus {
      * Accepts a supplier of a message.
      * @param message The supplier of message.
      */
-    public void info(Supplier<String> message) {
+    public void info(final Supplier<String> message) {
         if (logger.isInfoEnabled()) {
             Optional.ofNullable(message).ifPresent(___message -> logger.info(___message.get()));
         }
@@ -396,7 +396,7 @@ public class LoggerPlus {
      * Accepts a supplier of a message.
      * @param message The supplier of message.
      */
-    public void error(Supplier<String> message) {
+    public void error(final Supplier<String> message) {
         if (logger.isErrorEnabled()) {
             Optional.ofNullable(message).ifPresent(___message -> logger.error(___message.get()));
         }
@@ -435,7 +435,7 @@ public class LoggerPlus {
      * Accepts a supplier of a message.
      * @param message The supplier of message.
      */
-    public void warn(Supplier<String> message) {
+    public void warn(final Supplier<String> message) {
         if (logger.isWarnEnabled()) {
             Optional.ofNullable(message).ifPresent(___message -> logger.warn(___message.get()));
         }
@@ -463,7 +463,7 @@ public class LoggerPlus {
      * Accepts a supplier of a message.
      * @param message The supplier of message.
      */
-    public void trace(Supplier<String> message) {
+    public void trace(final Supplier<String> message) {
         if (logger.isTraceEnabled()) {
             Optional.ofNullable(message).ifPresent(___message -> logger.trace(___message.get()));
         }
