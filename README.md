@@ -4,8 +4,7 @@ Additional functionality to logging.
 
 ## Requires
 
-* Java 11
-* SLF4J 1.8+
+* Java 17
 
 ## Usage
 
@@ -15,12 +14,12 @@ Additional functionality to logging.
    | ----------- | ------------------- |
    | Group ID    | xyz.ronella.logging |
    | Artifact ID | logger-plus         |
-   | Version     | 1.1.1               |
+   | Version     | 1.2.0               |
 
    > Using gradle, this can be added as a dependency entry like the following:
    >
    > ```groovy
-   > implementation 'xyz.ronella.logging:logger-plus:1.1.1'
+   > implementation 'xyz.ronella.logging:logger-plus:1.2.0'
    > ```
 
 2. Include the following to your **module-info.java**:
@@ -49,7 +48,25 @@ There are **two sets** of log level methods available. One that accepts message 
 | debug(String)    | debug(Supplier<String>)                   |
 | trace(String)    | trace(Supplier<String>)                   |
 
-> You don't need to call the corresponding **enabled methods** of the preceding log level methods *(i.e. isErrorEnabled(), isWarnEnabled(), isInfoEnabled(), isDebugEnabled() and isTraceEnabled())*. Call to these methods were already done for you. The more efficient sets of method to use are the ones that accepts an instance of Supplier<String> that generates the message.
+> The more efficient sets of method to use are the ones that accepts an instance of Supplier<String> that generates the message since it already called the enabled methods *(i.e. isErrorEnabled(), isWarnEnabled(), isInfoEnabled(), isDebugEnabled() and isTraceEnabled())*.
+
+## Formatted Message
+
+Use the following syntax for the formatted message.
+
+```
+<LOG_LEVEL_METHOD>(String format, Object ... values)
+```
+
+> LOG_LEVEL_METHOD can be one of the following: debug, error, info, trace, warn.
+
+**Formatting** is done using the **String.format method**. Hence you can use all the formatting values available with that method.
+
+**Example**
+
+```java
+logger.info("Hello %s", "world")
+```
 
 ## Group the Log by Name
 
@@ -94,6 +111,91 @@ LOGGER_PLUS.error(LOGGER_PLUS.getStackTraceAsString(exception));
 ## The getLogger() Method
 
 If you need some specific functionality of the Logger, you can get an instance of it using the getLogger() method. The instance that you will receive is the one you've passed from the constructor.
+
+## Sample Gradle Project
+
+### build.gradle
+
+```groovy
+package main;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import xyz.ronella.logging.LoggerPlus;
+
+public class Main {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(Main.class);
+    private final static LoggerPlus LOGGER_PLUS = new LoggerPlus(LOGGER);
+
+    public static void main(String ... args) {
+        final var message = "An info logger";
+        LOGGER_PLUS.info(message::toString);   //Using the supplier argument.
+        LOGGER_PLUS.info("Hello %s", "world"); //Using arguments with format.
+    }
+}
+```
+
+### log4j2.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Properties>
+        <Property name="filename">logs/logger-plus.log</Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <RollingFile name="File" fileName="${filename}" filePattern="logs/$${date:yyyy-MM}/logger-plus-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern="%d [%t] %-5level %logger{36} - %msg%n"/>
+            <DefaultRolloverStrategy max="10"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="TRACE">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Root>
+    </Loggers>
+</Configuration>
+```
+
+### module-info.java
+
+```java
+module logger.plus.test.main {
+    requires xyz.ronella.logging.logger.plus;
+    requires org.apache.logging.log4j;
+}
+```
+
+### Main.java
+
+```java
+package main;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import xyz.ronella.logging.LoggerPlus;
+
+public class Main {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(Main.class);
+    private final static LoggerPlus LOGGER_PLUS = new LoggerPlus(LOGGER);
+
+    public static void main(String ... args) {
+        final var message = "A logger info";
+        LOGGER_PLUS.info(message::toString); //Using the supplier argument.
+        LOGGER_PLUS.info("Hello %s", "world"); //Using arguments with format.
+    }
+}
+```
 
 ## License
 
