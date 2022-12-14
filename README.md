@@ -117,22 +117,22 @@ If you need some specific functionality of the Logger, you can get an instance o
 ### build.gradle
 
 ```groovy
-package main;
+plugins {
+    id 'java'
+}
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import xyz.ronella.logging.LoggerPlus;
+group 'xyz.ronella.sample'
+version '1.0.0-SNAPSHOT'
 
-public class Main {
+repositories {
+    mavenCentral()
+}
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(Main.class);
-    private final static LoggerPlus LOGGER_PLUS = new LoggerPlus(LOGGER);
-
-    public static void main(String ... args) {
-        final var message = "An info logger";
-        LOGGER_PLUS.info(message::toString);   //Using the supplier argument.
-        LOGGER_PLUS.info("Hello %s", "world"); //Using arguments with format.
-    }
+dependencies {
+    implementation 'xyz.ronella.logging:logger-plus:1.2.0'
+    implementation 'org.apache.logging.log4j:log4j-slf4j2-impl:2.19.0'
+    implementation 'org.apache.logging.log4j:log4j-api:2.19.0'
+    implementation 'org.apache.logging.log4j:log4j-core:2.19.0'
 }
 ```
 
@@ -190,8 +190,8 @@ public class Main {
     private final static LoggerPlus LOGGER_PLUS = new LoggerPlus(LOGGER);
 
     public static void main(String ... args) {
-        final var message = "A logger info";
-        LOGGER_PLUS.info(message::toString); //Using the supplier argument.
+        final var message = "An info logger";
+        LOGGER_PLUS.info(message::toString);   //Using the supplier argument.
         LOGGER_PLUS.info("Hello %s", "world"); //Using arguments with format.
     }
 }
