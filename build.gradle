@@ -5,6 +5,7 @@ plugins {
     id "io.github.gradle-nexus.publish-plugin" version "1.1.0"
     id 'signing'
     id 'jacoco'
+    id "io.snyk.gradle.plugin.snykplugin" version "0.4"
 }
 
 group 'xyz.ronella.logging'
@@ -13,6 +14,14 @@ version '1.2.0'
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+}
+
+snyk {
+    arguments = '--all-sub-projects'
+    severity = 'low'
+    api = "${snykToken}"
+    autoDownload = true
+    autoUpdate = true
 }
 
 repositories {
