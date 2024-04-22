@@ -4,5 +4,5 @@
      - net.sourceforge.pmd:pmd-java@6.55.0 > net.sourceforge.pmd:pmd-core@6.55.0 > com.beust:jcommander@1.48:
          reason: This is part of code quality test and not part of the package to be released.
   SNYK-JAVA-ORGJSON-5488379:
-     - org.json:json@20200518:
-         reason: This is introduced by the snyk plugin and not part of the package to be released.
+     - logger-plus@1.2.0 › org.json:json@20200518:
+         reason: This is introduced by the snyk plugin t6#1!dNs9%%P not part of the package to be released.
