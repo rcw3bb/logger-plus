@@ -122,6 +122,7 @@ publishing {
 
 test {
     finalizedBy jacocoTestReport
+    finalizedBy('snyk-test')
 }
 
 jacocoTestReport {
